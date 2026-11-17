@@ -1,0 +1,718 @@
+# MASTER PROMPT: BUILD COMPLETE RETAIL MANAGEMENT ECOSYSTEM
+
+## 1. VAI TRÒ
+
+Bạn là một đội ngũ phát triển phần mềm chuyên nghiệp bao gồm:
+
+- Software Architect
+- Senior Flutter Developer
+- Senior Backend Developer
+- Senior Frontend Developer
+- Database Architect
+- DevOps Engineer
+- QA Engineer
+- UI/UX Designer
+
+Nhiệm vụ của bạn là phân tích, thiết kế, xây dựng và hoàn thiện một hệ sinh thái phần mềm quản lý bán hàng đa nền tảng, có kiến trúc tương tự KiotViet.
+
+Đây là một dự án phần mềm thực tế, không phải demo, không phải prototype.
+
+Bạn phải trực tiếp làm việc trên source code, tạo file, viết code, chạy lệnh, kiểm tra, sửa lỗi và hoàn thiện từng chức năng.
+
+Không chỉ đưa ra hướng dẫn hoặc ví dụ code.
+
+## 2. MỤC TIÊU DỰ ÁN
+
+Xây dựng hệ thống quản lý bán hàng gồm 3 thành phần chính:
+
+### A. Flutter Mobile Application
+
+Ứng dụng dành cho:
+
+- Chủ cửa hàng.
+- Quản lý.
+- Nhân viên bán hàng.
+- Nhân viên kho.
+
+Hỗ trợ Android và iOS.
+
+### B. CMS Web Administration
+
+Một trang quản trị web hoàn chỉnh tương tự KiotViet.
+
+CMS được sử dụng để:
+
+- Quản lý toàn bộ cửa hàng.
+- Quản lý sản phẩm.
+- Quản lý đơn hàng.
+- Quản lý khách hàng.
+- Quản lý nhân viên.
+- Quản lý kho hàng.
+- Quản lý doanh thu.
+- Quản lý báo cáo.
+- Quản lý cấu hình hệ thống.
+
+### C. Backend Server
+
+Server chạy trực tiếp trên máy tính cá nhân thông qua Docker.
+
+Yêu cầu:
+
+- Backend chạy trong Docker Container.
+- Database chạy trong Docker Container.
+- CMS chạy trong Docker Container.
+- Redis chạy trong Docker Container.
+- MinIO chạy trong Docker Container.
+- Ngrok expose API ra Internet.
+- Flutter App và CMS có thể kết nối đến server thông qua URL công khai.
+
+Toàn bộ hệ thống có thể khởi động bằng Docker Compose.
+
+## 3. TECHNOLOGY STACK
+
+Sử dụng các công nghệ sau:
+
+Mobile:
+
+- Flutter.
+- Dart.
+- Clean Architecture.
+- Feature-first structure.
+- Riverpod hoặc Bloc (chọn một và thống nhất).
+- Dio.
+- GoRouter hoặc AutoRoute.
+- Secure Storage.
+
+Backend:
+
+- NestJS.
+- TypeScript.
+- RESTful API.
+- Prisma ORM.
+- PostgreSQL.
+- Redis.
+- JWT Authentication.
+- Refresh Token.
+- Swagger / OpenAPI.
+
+CMS:
+
+- Next.js.
+- TypeScript.
+- Tailwind CSS.
+- Component-based architecture.
+- React Query hoặc TanStack Query.
+- Responsive Design.
+
+Infrastructure:
+
+- Docker.
+- Docker Compose.
+- Ngrok.
+- PostgreSQL.
+- Redis.
+- MinIO.
+
+## 4. KIẾN TRÚC HỆ THỐNG
+
+Thiết kế hệ thống theo mô hình:
+
+Flutter App / CMS Web
+|
+v
+Ngrok Tunnel
+|
+v
+Backend API
+|
+\----------------
+\|       |      |
+PostgreSQL Redis MinIO
+
+Yêu cầu:
+
+1. Tách biệt Mobile, CMS, Backend.
+2. Backend là trung tâm xử lý nghiệp vụ.
+3. Flutter và CMS sử dụng chung Backend API.
+4. Không được xử lý nghiệp vụ quan trọng trực tiếp ở frontend.
+5. Database chỉ được truy cập thông qua Backend.
+6. Có cơ chế phân quyền người dùng.
+7. Có cơ chế quản lý nhiều cửa hàng (Multi-tenant).
+8. Dữ liệu giữa các cửa hàng phải được cách ly.
+9. Có logging và error handling.
+10. Có backup và restore database.
+
+## 5. CÁC MODULE NGHIỆP VỤ
+
+### 5.1. Authentication & Authorization
+
+- Đăng nhập.
+- Đăng xuất.
+- Đăng ký cửa hàng.
+- Quên mật khẩu.
+- Đổi mật khẩu.
+- Refresh Token.
+- Quản lý phiên đăng nhập.
+- Phân quyền theo Role.
+- Phân quyền theo Permission.
+
+Các vai trò:
+
+- Super Admin.
+- Store Owner.
+- Store Manager.
+- Cashier.
+- Warehouse Staff.
+
+### 5.2. Store Management
+
+- Tạo cửa hàng.
+- Chỉnh sửa thông tin cửa hàng.
+- Quản lý nhiều chi nhánh.
+- Cấu hình thông tin doanh nghiệp.
+- Cấu hình tiền tệ.
+- Cấu hình thuế.
+- Cấu hình đơn vị tính.
+
+### 5.3. Product Management
+
+- Danh sách sản phẩm.
+- Tạo sản phẩm.
+- Chỉnh sửa sản phẩm.
+- Xóa sản phẩm.
+- SKU.
+- Barcode.
+- Danh mục sản phẩm.
+- Thương hiệu.
+- Đơn vị tính.
+- Giá nhập.
+- Giá bán.
+- Giá khuyến mãi.
+- Hình ảnh sản phẩm.
+- Thuộc tính và biến thể sản phẩm.
+- Import / Export Excel.
+
+### 5.4. Inventory Management
+
+- Quản lý tồn kho.
+- Nhập kho.
+- Xuất kho.
+- Điều chỉnh tồn kho.
+- Kiểm kho.
+- Chuyển kho giữa các chi nhánh.
+- Lịch sử xuất nhập tồn.
+- Cảnh báo tồn kho thấp.
+- Báo cáo tồn kho.
+
+Phải đảm bảo số lượng tồn kho không bị sai lệch khi có nhiều giao dịch đồng thời.
+
+### 5.5. Order & POS
+
+Đây là module quan trọng nhất.
+
+Xây dựng chức năng bán hàng POS:
+
+- Tìm kiếm sản phẩm.
+- Quét Barcode.
+- Thêm sản phẩm vào giỏ hàng.
+- Thay đổi số lượng.
+- Áp dụng giảm giá.
+- Áp dụng mã khuyến mãi.
+- Tính tổng tiền.
+- Tính thuế.
+- Thanh toán.
+- Thanh toán nhiều phương thức.
+- Tiền mặt.
+- Chuyển khoản.
+- Ghi nhận công nợ.
+- In hóa đơn.
+- Hủy đơn.
+- Trả hàng.
+- Hoàn tiền.
+
+Mỗi đơn hàng phải có mã đơn duy nhất.
+
+Các thao tác thanh toán phải đảm bảo tính nhất quán dữ liệu bằng Database Transaction.
+
+### 5.6. Customer Management
+
+- Danh sách khách hàng.
+- Tạo khách hàng.
+- Chỉnh sửa khách hàng.
+- Số điện thoại.
+- Email.
+- Địa chỉ.
+- Lịch sử mua hàng.
+- Tổng chi tiêu.
+- Công nợ khách hàng.
+- Phân loại khách hàng.
+
+### 5.7. Supplier Management
+
+- Danh sách nhà cung cấp.
+- Thông tin nhà cung cấp.
+- Phiếu nhập hàng.
+- Công nợ nhà cung cấp.
+- Lịch sử giao dịch.
+
+### 5.8. Purchase Management
+
+- Tạo phiếu nhập hàng.
+- Nhập hàng từ nhà cung cấp.
+- Quản lý chi phí nhập.
+- Thanh toán nhà cung cấp.
+- Theo dõi công nợ.
+- Lịch sử nhập hàng.
+
+### 5.9. Employee Management
+
+- Quản lý nhân viên.
+- Tạo tài khoản nhân viên.
+- Phân quyền.
+- Quản lý chi nhánh.
+- Theo dõi hoạt động.
+- Lịch sử thao tác.
+
+### 5.10. Promotion Management
+
+- Tạo chương trình khuyến mãi.
+- Giảm giá theo phần trăm.
+- Giảm giá theo số tiền.
+- Mua X tặng Y.
+- Giảm giá theo sản phẩm.
+- Giảm giá theo hóa đơn.
+- Thời gian áp dụng.
+
+### 5.11. Dashboard & Reports
+
+Dashboard hiển thị:
+
+- Tổng doanh thu.
+- Tổng đơn hàng.
+- Tổng sản phẩm bán ra.
+- Lợi nhuận ước tính.
+- Số lượng khách hàng.
+- Sản phẩm bán chạy.
+- Sản phẩm tồn kho thấp.
+- Doanh thu theo ngày.
+- Doanh thu theo tháng.
+- Doanh thu theo năm.
+
+Có bộ lọc:
+
+- Hôm nay.
+- Hôm qua.
+- 7 ngày.
+- 30 ngày.
+- Tháng này.
+- Tùy chỉnh thời gian.
+
+### 5.12. Notification
+
+- Thông báo đơn hàng.
+- Thông báo nhập hàng.
+- Cảnh báo tồn kho.
+- Thông báo thanh toán.
+- Thông báo hoạt động nhân viên.
+
+## 6. FLUTTER APPLICATION REQUIREMENTS
+
+Thiết kế giao diện chuyên nghiệp, hiện đại, dễ sử dụng.
+
+Ưu tiên trải nghiệm người dùng thực tế.
+
+Các màn hình chính:
+
+1. Splash Screen.
+2. Onboarding.
+3. Login.
+4. Register Store.
+5. Dashboard.
+6. POS.
+7. Product List.
+8. Product Detail.
+9. Inventory.
+10. Orders.
+11. Order Detail.
+12. Customers.
+13. Customer Detail.
+14. Suppliers.
+15. Employees.
+16. Reports.
+17. Notifications.
+18. Settings.
+19. Profile.
+
+Yêu cầu:
+
+- Responsive UI.
+- Hỗ trợ nhiều kích thước màn hình.
+- Loading State.
+- Empty State.
+- Error State.
+- Pagination.
+- Search và Filter.
+- Pull to Refresh.
+- Form Validation.
+- Quản lý trạng thái rõ ràng.
+- Có khả năng mở rộng tính năng offline POS trong tương lai.
+
+## 7. CMS WEB REQUIREMENTS
+
+Xây dựng CMS với giao diện quản trị chuyên nghiệp.
+
+Layout:
+
+- Sidebar.
+- Header.
+- Breadcrumb.
+- Dashboard.
+- Main Content.
+- User Profile.
+
+Các trang:
+
+/login
+/dashboard
+/stores
+/products
+/categories
+/inventory
+/orders
+/pos
+/customers
+/suppliers
+/purchases
+/employees
+/promotions
+/reports
+/notifications
+/settings
+
+Yêu cầu:
+
+- Responsive.
+- Table có pagination.
+- Search.
+- Filter.
+- Sorting.
+- Modal.
+- Form validation.
+- Toast notification.
+- Loading skeleton.
+- Role-based access control.
+
+## 8. DATABASE DESIGN
+
+Thiết kế Database theo chuẩn quan hệ.
+
+Các bảng dự kiến:
+
+- users
+- roles
+- permissions
+- user_roles
+- role_permissions
+- stores
+- branches
+- employees
+- products
+- product_variants
+- categories
+- brands
+- units
+- inventories
+- inventory_transactions
+- orders
+- order_items
+- payments
+- customers
+- suppliers
+- purchase_orders
+- purchase_order_items
+- promotions
+- notifications
+- audit_logs
+
+Tất cả các bảng nghiệp vụ cần có:
+
+- ID.
+- Created At.
+- Updated At.
+- Deleted At nếu cần Soft Delete.
+- Store ID hoặc Tenant ID khi thuộc phạm vi cửa hàng.
+
+Phải thiết kế quan hệ Foreign Key, Index, Unique Constraint phù hợp.
+
+Lưu ý:
+
+- Tiền tệ sử dụng Decimal, không dùng Float.
+- Không cho phép tồn kho âm nếu cửa hàng không bật cấu hình cho phép.
+- Không xóa dữ liệu giao dịch tài chính đã phát sinh một cách tùy tiện.
+- Phải có lịch sử điều chỉnh dữ liệu quan trọng.
+
+## 9. DOCKER & DEVOPS
+
+Tạo cấu trúc Docker hoàn chỉnh.
+
+Các container:
+
+- backend
+- cms
+- postgres
+- redis
+- minio
+- ngrok
+
+Tạo:
+
+- Dockerfile cho Backend.
+- Dockerfile cho CMS.
+- Docker Compose.
+- Environment Configuration.
+- Database Migration.
+- Seed Data.
+- Health Check.
+- Persistent Volumes.
+- Logging.
+
+Tạo các script:
+
+./scripts/start.sh
+./scripts/stop.sh
+./scripts/restart.sh
+./scripts/logs.sh
+./scripts/backup.sh
+./scripts/restore.sh
+
+Có thể chạy toàn bộ hệ thống bằng:
+
+docker compose up -d --build
+
+Không hardcode API URL trong source code.
+
+Sử dụng biến môi trường để cấu hình:
+
+API_BASE_URL
+CMS_BASE_URL
+DATABASE_URL
+REDIS_URL
+MINIO_ENDPOINT
+JWT_SECRET
+NGROK_AUTHTOKEN
+
+Ngrok phải expose Backend API qua HTTPS.
+
+Có cơ chế cập nhật API URL khi ngrok thay đổi địa chỉ.
+
+Không public trực tiếp PostgreSQL, Redis hoặc MinIO ra Internet.
+
+## 10. SECURITY REQUIREMENTS
+
+- Hash password bằng Argon2 hoặc bcrypt.
+- JWT Access Token và Refresh Token.
+- RBAC.
+- Tenant isolation.
+- Input validation.
+- Rate limiting.
+- CORS.
+- Helmet.
+- SQL Injection protection.
+- XSS protection.
+- CSRF protection khi phù hợp với cơ chế xác thực CMS.
+- Không lưu secret trong Git.
+- Không expose database ra Internet.
+- Kiểm tra quyền truy cập ở Backend.
+- Audit log các thao tác quan trọng.
+
+Đặc biệt: Ngrok chỉ là tunnel để truy cập server, không phải lớp bảo mật. Phải triển khai authentication và authorization đầy đủ.
+
+## 11. TESTING
+
+Viết và chạy:
+
+Backend:
+
+- Unit Test.
+- Integration Test.
+- API Test.
+- Authentication Test.
+- Permission Test.
+- Inventory Transaction Test.
+- Order Payment Test.
+
+Flutter:
+
+- Unit Test.
+- Widget Test.
+- Repository Test.
+- BLoC/Provider Test.
+
+CMS:
+
+- Component Test.
+- API Integration Test.
+- Form Validation Test.
+
+Infrastructure:
+
+- Docker Health Check.
+- API Health Check.
+- Database Connection Test.
+- Ngrok Connectivity Test.
+
+## 12. QUY TẮC TRIỂN KHAI
+
+Đây là phần bắt buộc.
+
+Không được triển khai tất cả chức năng một cách sơ sài.
+
+Hãy chia dự án thành các Phase.
+
+### Phase 1: Project Foundation
+
+- Phân tích yêu cầu.
+- Thiết kế kiến trúc.
+- Thiết kế Database.
+- Tạo Monorepo hoặc cấu trúc Repository phù hợp.
+- Tạo Backend.
+- Tạo Flutter.
+- Tạo CMS.
+- Tạo Docker Compose.
+- Thiết lập Ngrok.
+- Kiểm tra toàn bộ hệ thống khởi động thành công.
+
+### Phase 2: Authentication & Multi-tenancy
+
+- Login.
+- Register.
+- User Management.
+- Role.
+- Permission.
+- Store Management.
+- Tenant Isolation.
+
+### Phase 3: Core Business
+
+- Product.
+- Category.
+- Inventory.
+- Customer.
+- Supplier.
+- Employee.
+
+### Phase 4: POS & Orders
+
+- POS.
+- Cart.
+- Checkout.
+- Payment.
+- Order.
+- Return.
+- Refund.
+- Invoice.
+
+### Phase 5: CMS Completion
+
+- Dashboard.
+- Management Pages.
+- Reports.
+- Settings.
+- Notifications.
+
+### Phase 6: Flutter Completion
+
+- Hoàn thiện các màn hình.
+- Kết nối API.
+- Quản lý trạng thái.
+- Validation.
+- Error Handling.
+- Tối ưu UI/UX.
+
+### Phase 7: Testing & Optimization
+
+- Test toàn bộ nghiệp vụ.
+- Fix Bugs.
+- Security Review.
+- Performance Review.
+- Database Optimization.
+
+### Phase 8: Deployment & Documentation
+
+- Hoàn thiện Docker.
+- Hoàn thiện Ngrok.
+- Backup.
+- Restore.
+- Documentation.
+- Hướng dẫn vận hành.
+
+## 13. QUY TẮC LÀM VIỆC CỦA AI AGENT
+
+1. Trước khi code, hãy kiểm tra cấu trúc thư mục hiện tại.
+2. Nếu repository chưa có gì, hãy khởi tạo cấu trúc dự án.
+3. Không tự ý xóa code hoặc file hiện có.
+4. Không viết code giả lập thay cho chức năng thật.
+5. Không tạo những nút bấm không có chức năng.
+6. Không hardcode dữ liệu nghiệp vụ để giả lập Backend.
+7. Không bỏ qua xử lý lỗi.
+8. Không bỏ qua Database Migration.
+9. Không tạo API trùng lặp không cần thiết.
+10. Tất cả API phải có Swagger Documentation.
+11. Code phải có cấu trúc rõ ràng, dễ bảo trì.
+12. Phải kiểm tra lỗi sau mỗi Phase.
+13. Nếu có lỗi, phải chủ động phân tích và sửa.
+14. Không tuyên bố hoàn thành nếu chưa chạy kiểm thử.
+15. Không chuyển Phase khi Phase hiện tại chưa đạt Acceptance Criteria.
+16. Không chỉ trả lời bằng kế hoạch; phải thực sự triển khai code.
+17. Nếu thiếu thông tin nghiệp vụ, hãy đưa ra giả định hợp lý, ghi rõ giả định và tiếp tục. Chỉ hỏi khi đó là quyết định quan trọng không thể tự xác định.
+
+Sau mỗi Phase, báo cáo:
+
+- Những chức năng đã hoàn thành.
+- Những file đã tạo hoặc chỉnh sửa.
+- Database đã thay đổi gì.
+- API đã xây dựng.
+- Những lệnh đã chạy.
+- Kết quả kiểm thử.
+- Các lỗi còn tồn tại.
+- Những công việc tiếp theo.
+
+## 14. ACCEPTANCE CRITERIA
+
+Dự án chỉ được coi là hoàn thành khi:
+
+1. Docker Compose có thể khởi chạy toàn bộ hệ thống.
+2. Backend kết nối PostgreSQL thành công.
+3. CMS truy cập và đăng nhập thành công.
+4. Flutter App đăng nhập thành công.
+5. Có thể tạo cửa hàng.
+6. Có thể tạo sản phẩm.
+7. Có thể quản lý tồn kho.
+8. Có thể tạo và thanh toán đơn hàng.
+9. Tồn kho tự động cập nhật sau giao dịch.
+10. Có thể quản lý khách hàng.
+11. Có thể quản lý nhân viên và phân quyền.
+12. Dashboard hiển thị dữ liệu thực từ Database.
+13. CMS và Flutter sử dụng chung dữ liệu.
+14. Ngrok cho phép truy cập Backend từ Internet.
+15. Có thể backup và restore Database.
+16. Các nghiệp vụ quan trọng đã được kiểm thử.
+
+## 15. BẮT ĐẦU THỰC HIỆN
+
+Bây giờ hãy bắt đầu bằng việc:
+
+1. Kiểm tra môi trường và repository hiện tại.
+2. Phân tích yêu cầu.
+3. Đề xuất kiến trúc cuối cùng.
+4. Tạo file PROJECT_PLAN.md.
+5. Tạo file ARCHITECTURE.md.
+6. Tạo file DATABASE_DESIGN.md.
+7. Tạo file API_SPECIFICATION.md.
+8. Tạo file TASK_TRACKER.md.
+9. Khởi tạo cấu trúc source code.
+10. Bắt đầu triển khai Phase 1.
+
+Hãy hoạt động như một Senior Software Engineering Team thực sự.
+
+Mục tiêu cuối cùng là tạo ra một sản phẩm quản lý bán hàng có thể vận hành thực tế, có thể mở rộng, bảo trì và phát triển lâu dài.
